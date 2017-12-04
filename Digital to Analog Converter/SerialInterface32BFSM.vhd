@@ -1,0 +1,302 @@
+Library IEEE;
+use IEEE.std_logic_1164.all;
+
+Entity SerialInterface32BFSM is
+	port(
+	RST : in std_logic;
+	CLK : in std_logic;
+	STT : in std_logic;
+	SHF : out std_logic;
+	EOT : out std_logic
+	);
+end SerialInterface32BFSM;
+
+Architecture Behavioral of SerialInterface32BFSM is
+signal Qp, Qn : std_logic_vector(6 downto 0);
+begin
+	Combinational : process(Qp, STT)
+	begin
+		case Qp is
+			when "0000000" => --Idle state
+				SHF <= '0';
+				EOT <= '1';
+				if STT = '1' then
+					Qn <= "0000001";
+				else
+					Qn <= Qp;
+				end if;
+			when "0000001" => --CSS falling
+				SHF <= '0';
+				EOT <= '0';
+				Qn <= "0000010";
+			when "0000010" => --dumb bit 3
+				SHF <= '1';
+				EOT <= '0';
+				Qn <= "0000011";
+			when "0000011" => 
+				SHF <= '0';
+				EOT <= '0';
+				Qn <= "0000100";
+			when "0000100" => --dumb bit 2
+				SHF <= '1';
+				EOT <= '0';
+				Qn <= "0000101";
+			when "0000101" =>
+				SHF <= '0';
+				EOT <= '0';
+				Qn <= "0000110";
+			when "0000110" => --dumb bit 1
+				SHF <= '1';
+				EOT <= '0';
+				Qn <= "0000111";
+			when "0000111" =>
+				SHF <= '0';
+				EOT <= '0';
+				Qn <= "0001000";
+			when "0001000" => --dumb bit 0
+				SHF <= '1';
+				EOT <= '0';
+				Qn <= "0001001";
+			when "0001001" =>
+				SHF <= '0';
+				EOT <= '0';
+				Qn <= "0001010";
+			when "0001010" => --control bit 3
+				SHF <= '1';
+				EOT <= '0';
+				Qn <= "0001011";
+			when "0001011" =>
+				SHF <= '0';
+				EOT <= '0';
+				Qn <= "0001100";
+			when "0001100" => --control bit 2
+				SHF <= '1';
+				EOT <= '0';
+				Qn <= "0001101";
+			when "0001101" =>
+				SHF <= '0';
+				EOT <= '0';
+				Qn <= "0001110";
+			when "0001110" => --control bit 1
+				SHF <= '1';
+				EOT <= '0';
+				Qn <= "0001111";
+			when "0001111" =>
+				SHF <= '0';
+				EOT <= '0';
+				Qn <= "0010000";
+			when "0010000" => --control bit 0
+				SHF <= '1';
+				EOT <= '0';
+				Qn <= "0010001";
+			when "0010001" =>
+				SHF <= '0';
+				EOT <= '0';
+				Qn <= "0010010";
+			when "0010010" => --address bit 3
+				SHF <= '1';
+				EOT <= '0';
+				Qn <= "0010011";
+			when "0010011" =>
+				SHF <= '0';
+				EOT <= '0';
+				Qn <= "0010100";
+			when "0010100" => --address bit 2
+				SHF <= '1';
+				EOT <= '0';
+				Qn <= "0010101";
+			when "0010101" =>
+				SHF <= '0';
+				EOT <= '0';
+				Qn <= "0010110";
+			when "0010110" => --address bit 1
+				SHF <= '1';
+				EOT <= '0';
+				Qn <= "0010111";
+			when "0010111" =>
+				SHF <= '0';
+				EOT <= '0';
+				Qn <= "0011000";
+			when "0011000" => --address bit 0
+				SHF <= '1';
+				EOT <= '0';
+				Qn <= "0011001";
+			when "0011001" =>
+				SHF <= '0';
+				EOT <= '0';
+				Qn <= "0011010";
+			when "0011010" => --data bit 15
+				SHF <= '1';
+				EOT <= '0';
+				Qn <= "0011011";
+			when "0011011" =>
+				SHF <= '0';
+				EOT <= '0';
+				Qn <= "0011100";
+			when "0011100" => --data bit 14
+				SHF <= '1';
+				EOT <= '0';
+				Qn <= "0011101";
+			when "0011101" =>
+				SHF <= '0';
+				EOT <= '0';
+				Qn <= "0011110";
+			when "0011110" => --data bit 13
+				SHF <= '1';
+				EOT <= '0';
+				Qn <= "0011111";
+			when "0011111" =>
+				SHF <= '0';
+				EOT <= '0';
+				Qn <= "0100000";
+			when "0100000" => --data bit 12
+				SHF <= '1';
+				EOT <= '0';
+				Qn <= "0100001";
+			when "0100001" =>
+				SHF <= '0';
+				EOT <= '0';
+				Qn <= "0100010";
+			when "0100010" => --data bit 11
+				SHF <= '1';
+				EOT <= '0';
+				Qn <= "0100011";
+			when "0100011" =>
+				SHF <= '0';
+				EOT <= '0';
+				Qn <= "0100100";
+			when "0100100" => --data bit 10
+				SHF <= '1';
+				EOT <= '0';
+				Qn <= "0100101";
+			when "0100101" =>
+				SHF <= '0';
+				EOT <= '0';
+				Qn <= "0100110";
+			when "0100110" => --data bit 9
+				SHF <= '1';
+				EOT <= '0';
+				Qn <= "0100111";
+			when "0100111" =>
+				SHF <= '0';
+				EOT <= '0';
+				Qn <= "0101000";
+			when "0101000" => --data bit 8
+				SHF <= '1';
+				EOT <= '0';
+				Qn <= "0101001";
+			when "0101001" =>
+				SHF <= '0';
+				EOT <= '0';
+				Qn <= "0101010";
+			when "0101010" => --data bit 7
+				SHF <= '1';
+				EOT <= '0';
+				Qn <= "0101011";
+			when "0101011" =>
+				SHF <= '0';
+				EOT <= '0';
+				Qn <= "0101100";
+			when "0101100" => --data bit 6
+				SHF <= '1';
+				EOT <= '0';
+				Qn <= "0101101";
+			when "0101101" =>
+				SHF <= '0';
+				EOT <= '0';
+				Qn <= "0101110";
+			when "0101110" => --data bit 5
+				SHF <= '1';
+				EOT <= '0';
+				Qn <= "0101111";
+			when "0101111" =>
+				SHF <= '0';
+				EOT <= '0';
+				Qn <= "0110000";
+			when "0110000" => --data bit 4
+				SHF <= '1';
+				EOT <= '0';
+				Qn <= "0110001";
+			when "0110001" =>
+				SHF <= '0';
+				EOT <= '0';
+				Qn <= "0110010";
+			when "0110010" => --data bit 3
+				SHF <= '1';
+				EOT <= '0';
+				Qn <= "0110011";
+			when "0110011" =>
+				SHF <= '0';
+				EOT <= '0';
+				Qn <= "0110100";
+			when "0110100" => --data bit 2
+				SHF <= '1';
+				EOT <= '0';
+				Qn <= "0110101";
+			when "0110101" =>
+				SHF <= '0';
+				EOT <= '0';
+				Qn <= "0110110";
+			when "0110110" => --data bit 1
+				SHF <= '1';
+				EOT <= '0';
+				Qn <= "0110111";
+			when "0110111" =>
+				SHF <= '0';
+				EOT <= '0';
+				Qn <= "0111000";
+			when "0111000" => --data bit 0
+				SHF <= '1';
+				EOT <= '0';
+				Qn <= "0111001";
+			when "0111001" =>
+				SHF <= '0';
+				EOT <= '0';
+				Qn <= "0111010";
+			when "0111010" => --dumb bit 3
+				SHF <= '1';
+				EOT <= '0';
+				Qn <= "0111011";
+			when "0111011" =>
+				SHF <= '0';
+				EOT <= '0';
+				Qn <= "0111100";
+			when "0111100" => --dumb bit 2
+				SHF <= '1';
+				EOT <= '0';
+				Qn <= "0111101";
+			when "0111101" =>
+				SHF <= '0';
+				EOT <= '0';
+				Qn <= "0111110";
+			when "0111110" => --dumb bit 1
+				SHF <= '1';
+				EOT <= '0';
+				Qn <= "0111111";
+			when "0111111" =>
+				SHF <= '0';
+				EOT <= '0';
+				Qn <= "1000000";
+			when "1000000" => --dumb bit 0
+				SHF <= '1';
+				EOT <= '0';
+				Qn <= "1000001";
+			when others =>
+				SHF <= '0';
+				EOT <= '0';
+				Qn <= "0000000";
+--			when others => --CSE rising
+--				SHF <= '0';
+--				EOT <= '0';
+--				Qn <= "0000000";
+		end case;
+	end process Combinational;
+	Sequential : process(RST, CLK)
+	begin
+		if RST = '0' then
+			Qp <= (others => '0');
+		elsif CLK'event and CLK = '1' then
+			Qp <= Qn;
+		end if;
+	end process Sequential;
+end Behavioral;
